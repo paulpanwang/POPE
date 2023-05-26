@@ -1,5 +1,7 @@
 # POPE: 6-DoF Promptable Pose Estimation of Any Object, in Any Scene, with One Reference
 
+[[Paper]](https://arxiv.org/abs/2305.15727) [[Project]](https://paulpanwang.github.io/POPE/)
+
 Welcome to the project repository for POPE (Promptable Pose Estimation), a state-of-the-art technique for 6-DoF pose estimation of any object in any scene using a single reference.
 
 ## Web Demo
