@@ -1,0 +1,9 @@
+[submodule "segment-anything"]
+	path = segment-anything
+	url = https://github.com/facebookresearch/segment-anything
+[submodule "dinov2"]
+	path = dinov2
+	url = https://github.com/facebookresearch/dinov2
+[submodule "LoFTR"]
+	path = LoFTR
+	url = https://github.com/zju3dv/LoFTR
