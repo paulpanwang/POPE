@@ -27,3 +27,17 @@ We show Visualizations on LINEMOD, YCB-Video, OnePose and OnePose++ datasets, wi
 For more detailed quantitative results on each dataset (LINEMOD, YCB-Video, OnePose, OnePose++), please refer to the `appendix.pdf`.
 
 The appendix contains comprehensive information and evaluation metrics that demonstrate the accuracy and robustness of our POPE technique.
+
+
+## Citation
+
+If you find this repo is helpful, please consider citing:
+```bibtex
+@article{fan2023pope,
+  title={POPE: 6-DoF Promptable Pose Estimation of Any Object, in Any Scene, with One Reference},
+  author={Fan, Zhiwen and Pan, Panwang and Wang, Peihao and Jiang, Yifan and Xu, Dejia and Jiang, Hanwen and Wang, Zhangyang},
+  journal={arXiv preprint arXiv:2305.15727},
+  year={2023}
+}
+
+```
