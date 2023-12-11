@@ -114,29 +114,22 @@ python3 visual_sam.py
 # Demo2: visual 3D BBox
 python3 visual_3dbbox.py
 ```
-
+<!-- 
 <div>
   <img src="docs/static/imgs/pose-estimate.png" width="100%"/>
-</div>
+</div> -->
 
-<div>
-    <video>
-                <source src="https://github.com/paulpanwang/POPE/raw/main/docs/static/media/lm13_adjusted_compressed.f8829528fe5a67f5301f.mp4" type="video/mp4" />
-    </video>
-    <video>
-                <source src="docs/static/media/MOUSE_G1_adjusted_compressed.e9504417d415b735e684.mp4" type="video/mp4" />
-    </video>
-</div>
+
+<video src='docs/static/media/lm13_adjusted_compressed.f8829528fe5a67f5301f.mp4'> </video>
+ <video src='docs/static/media/MOUSE_G1_adjusted_compressed.e9504417d415b735e684.mp4'></video>
+
 
 ### Evaluation
 ```bash
 python3 eval_linemod_json.py
 python3 eval_onepose_json.py
 python3 eval_ycb_json.py
-
 ```
-
-
 
 ### Zero-shot Promtable Pose Estimation
 
@@ -154,9 +147,9 @@ which further demonstrates the robustness of POPE([DINOv2](https://github.com/pa
 We show the Application of Novel View Synthesis, by leveraging the estimated object poses, our method generate photo-realistic rendering results. we employ the estimated
  multi-view poses obtained from our POPE model, in combi nation with a pre-trained and generalizable Neural Radiance
  Field ([GNT](https://github.com/VITA-Group/GNT) and [Render](https://github.com/paulpanwang/POPE/tree/main/src/novel_view_render.py)) 
-
+<div>
  <img src="docs/static/imgs/novel-view.png" width="100%"/>
-
+</div>
 
 ### Comparison based on Video and Image
 
