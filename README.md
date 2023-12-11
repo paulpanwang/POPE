@@ -120,10 +120,10 @@ python3 visual_3dbbox.py
 </div>
 
 <div>
-    <video  autoplay loop muted controls>
+    <video>
                 <source src="https://github.com/paulpanwang/POPE/raw/main/docs/static/media/lm13_adjusted_compressed.f8829528fe5a67f5301f.mp4" type="video/mp4" />
     </video>
-    <video  autoplay loop muted controls>
+    <video>
                 <source src="docs/static/media/MOUSE_G1_adjusted_compressed.e9504417d415b735e684.mp4" type="video/mp4" />
     </video>
 </div>
