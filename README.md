@@ -23,6 +23,9 @@
 
 <img src="docs/static/imgs/teaser.png" width="100%"/>
 
+
+<video src='docs/static/media/lm1_adjusted_compressed.0c024804c5097f6284bd.mp4'> </video>
+
 <strong> Welcome to the project repository for POPE (Promptable Pose Estimation), a state-of-the-art technique for 6-DoF pose estimation of any object in any scene using a single reference.</strong>
 </div>
 
@@ -120,7 +123,7 @@ python3 visual_3dbbox.py
 </div> -->
 
 
-<video src='docs/static/media/lm1_adjusted_compressed.0c024804c5097f6284bd.mp4'> </video>
+
 
 
 ### Evaluation
