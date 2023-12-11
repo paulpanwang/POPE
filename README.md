@@ -120,8 +120,7 @@ python3 visual_3dbbox.py
 </div> -->
 
 
-<video src='docs/static/media/lm13_adjusted_compressed.f8829528fe5a67f5301f.mp4'> </video>
- <video src='docs/static/media/MOUSE_G1_adjusted_compressed.e9504417d415b735e684.mp4'></video>
+<video src='docs/static/media/lm1_adjusted_compressed.0c024804c5097f6284bd.mp4'> </video>
 
 
 ### Evaluation
