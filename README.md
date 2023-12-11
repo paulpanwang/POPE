@@ -96,23 +96,36 @@ The directory should be organized in the following structure:
 
 
 ### Demos
+<div>
+<font color="#dd0000">
+Thank you for your attention, and I apologize for the excessive use of hard-coded values in the code. We have now organized the code structure and README to make it more user-friendly.  
+
+The code has been recently tidied up for release and could perhaps contain tiny bugs. Please feel free to open an issue.
+</font><br /> 
+</div>
+
 ```bash
 bash demo.sh
-
 # Demo1: visual DINOv2 feature
 python3 visual_dinov2.py
 
-
 # Demo2: visual Segment Anything Model
 python3 visual_sam.py
-
-
 # Demo2: visual 3D BBox
 python3 visual_3dbbox.py
 ```
 
 <div>
   <img src="docs/static/imgs/pose-estimate.png" width="100%"/>
+</div>
+
+<div>
+    <video  autoplay loop muted controls>
+                <source src="docs/static/media/lm14_adjusted_compressed.9e99ece43799e8603cdd.mp4" type="video/mp4" />
+    </video>
+    <video  autoplay loop muted controls>
+                <source src="docs/static/media/MOUSE_G1_adjusted_compressed.e9504417d415b735e684.mp4" type="video/mp4" />
+    </video>
 </div>
 
 ### Evaluation
@@ -122,26 +135,16 @@ python3 eval_onepose_json.py
 python3 eval_ycb_json.py
 
 ```
-<font color="#dd0000">
-The code has been recently tidied up for release and could perhaps contain tiny bugs. Please feel free to open an issue.
-</font><br /> 
+
 
 
 ### Zero-shot Promtable Pose Estimation
 
 Some Visual Examples of Promptable Object Pose Estimation Test Cases on Outdoor, indoor and scene with severe occlutions.
-<div>
-    <video id="v0" autoplay loop muted controls>
-                <source src="./docs/static/media/lm13_adjusted_compressed.f8829528fe5a67f5301f.mp4" type="video/mp4" />
-    </video>
-    <video id="v1" autoplay loop muted controls>
-                <source src="./docs/static/media/MOUSE_G1_adjusted_compressed.e9504417d415b735e684.mp4" type="video/mp4" />
-    </video>
 
-</div>
 
 We also conduct a more challenging evaluation using an edge map as the reference,
-which further demonstrates the robustness of POPE.
+which further demonstrates the robustness of POPE([DINOv2](https://github.com/paulpanwang/POPE/tree/main/dinov2) and [Matcher](https://github.com/paulpanwang/POPE/blob/main/src/matcher.py)).
 <div>
   <img src="data/demos/match.png" width="100%"/>
 </div>
