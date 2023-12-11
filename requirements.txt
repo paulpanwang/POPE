@@ -1,0 +1,22 @@
+torch
+torchvision
+omegaconf
+torchmetrics==0.10.3
+fvcore
+iopath
+xformers
+submitit
+pathlib
+transforms3d
+numpy
+plyfile
+easydict
+scikit-image
+matplotlib
+pyyaml
+tabulate
+numpy
+tqdm
+loguru
+opencv-python
+--extra-index-url https://pypi.nvidia.com

@@ -1,0 +1,198 @@
+from pope_model_api import *
+
+if __name__ == "__main__":
+    ckpt, model_type = get_model_info("h")
+    sam = sam_model_registry[model_type](checkpoint=ckpt)
+    DEVICE = "cuda"
+    sam.to(device=DEVICE)
+    MASK_GEN = SamAutomaticMaskGenerator(sam)
+    logger.info(f"load SAM model from {ckpt}")
+    crop_tool = CropImage()
+    dinov2_model = load_dinov2_model()
+    dinov2_model.to("cuda:0")
+
+    metrics = dict()
+    metrics.update({'R_errs': [], 't_errs': [], 'inliers': [] , "identifiers":[] })
+
+
+    id2name_dict = {
+        1: "ape",
+        2: "benchvise",
+        4: "camera",
+        5: "can",
+        6: "cat",
+        8: "driller",
+        9: "duck",
+        10: "eggbox",
+        11: "glue",
+        12: "holepuncher",
+        13: "iron",
+        14: "lamp",
+        15: "phone",
+    }
+
+
+
+    # load model 
+    ROOT_DIR = "data/onepose/"
+    res_table = []
+
+    import json
+    with open("data/pairs/Onepose-HighTexture-test.json") as f:
+        dir_list = json.load(f)
+
+    for label_idx , test_dict in enumerate(dir_list):
+        print(f"Onepose: {label_idx}")
+        metrics = dict()
+        metrics.update({'R_errs': [], 't_errs': [], 'inliers': [] , "identifiers":[] })
+        sample_data = dir_list[label_idx]["0"][0]
+        label = sample_data.split("/")[0]
+        name = label.split("-")[1]
+        dir_name = os.path.dirname(sample_data)
+        FULL_ROOT_DIR = os.path.join(ROOT_DIR, dir_name) 
+        recall_image,all_image = 0,0
+        for rotation_key, rotation_list in zip(test_dict.keys(), test_dict.values()):
+            for pair_idx,pair_name in enumerate(tqdm(rotation_list)):
+                all_image = all_image + 1
+                base_name = os.path.basename(pair_name)
+                idx0_name = base_name.split("-")[0]
+                idx1_name = base_name.split("-")[1]
+                image0_name = os.path.join( FULL_ROOT_DIR, idx0_name )
+
+                image1_name = os.path.join( FULL_ROOT_DIR.replace("color", "color"),  idx1_name )
+                intrinsic_path = image0_name.replace("color", "intrin_ba").replace("png","txt")
+                K0 = np.loadtxt(intrinsic_path, delimiter=' ')
+                intrinsic_path = image1_name.replace("color", "intrin_ba").replace("png","txt")
+                K1 = np.loadtxt(intrinsic_path, delimiter=' ')
+
+                image0 = cv2.imread(image0_name)
+                ref_torch_image = set_torch_image(image0, center_crop=True)
+                ref_fea = get_cls_token_torch(dinov2_model, ref_torch_image)
+                image1 = cv2.imread(image1_name)
+                image_h,image_w,_ = image1.shape
+                t1 = time.time()
+                masks = MASK_GEN.generate(image1)
+                t2 = time.time()
+                similarity_score, top_images  = np.array([0,0,0],np.float32) , [[],[],[]]
+                t3 = time.time()
+                compact_percent = 0.3
+                for xxx, mask in enumerate(masks):
+                    object_mask = np.expand_dims(mask["segmentation"], -1)
+                    x0, y0, w, h = mask["bbox"]
+                    x1, y1 = x0+w,y0+h
+                    x0 -= int(w * compact_percent)
+                    y0 -= int(h * compact_percent)
+                    x1 += int(w * compact_percent)
+                    y1 += int(h * compact_percent)
+                    box = np.array([x0, y0, x1, y1])
+                    resize_shape = np.array([y1 - y0, x1 - x0])
+                    K_crop, K_crop_homo = get_K_crop_resize(box, K1, resize_shape)
+                    image_crop, _ = get_image_crop_resize(image1, box, resize_shape)
+                    # object_mask,_ = get_image_crop_resize(object_mask, box, resize_shape)
+                    box_new = np.array([0, 0, x1 - x0, y1 - y0])
+                    resize_shape = np.array([512, 512])
+                    K_crop, K_crop_homo = get_K_crop_resize(box_new, K_crop, resize_shape)
+                    image_crop, _ = get_image_crop_resize(image_crop, box_new, resize_shape)
+                    crop_tensor = set_torch_image(image_crop, center_crop=True)
+                    with torch.no_grad():
+                        fea = get_cls_token_torch(dinov2_model, crop_tensor)
+                    score = F.cosine_similarity(ref_fea, fea, dim=1, eps=1e-8)
+                    if  (score.item() > similarity_score).any():
+                        mask["crop_image"] = image_crop
+                        mask["K"] = K_crop
+                        mask["bbox"] = box
+                        min_idx = np.argmin(similarity_score)
+                        similarity_score[min_idx] = score.item()
+                        top_images[min_idx] = mask.copy()
+
+                img0 =  cv2.cvtColor(image0, cv2.COLOR_BGR2GRAY)
+                img0 = torch.from_numpy(img0).float()[None] / 255.
+                img0 = img0.unsqueeze(0).cuda()
+
+                matching_score =  [ [0] for _ in range(len(top_images)) ]
+                for top_idx in range(len(top_images)):
+                    if "crop_image" not in top_images[top_idx]:
+                        continue
+                    img1 =  cv2.cvtColor(top_images[top_idx]["crop_image"], cv2.COLOR_BGR2GRAY)
+                    img1 = torch.from_numpy(img1).float()[None] / 255.
+                    img1 = img1.unsqueeze(0).cuda()
+                    batch = {'image0': img0, 'image1': img1}
+                    with torch.no_grad():
+                        matcher(batch)    
+                        mkpts0 = batch['mkpts0_f'].cpu().numpy()
+                        mkpts1 = batch['mkpts1_f'].cpu().numpy()
+                        confidences = batch["mconf"].cpu().numpy()
+                    conf_mask = np.where(confidences > 0.9)
+                    matching_score[top_idx] = conf_mask[0].shape[0]
+                    top_images[top_idx]["mkpts0"] = mkpts0
+                    top_images[top_idx]["mkpts1"] = mkpts1
+                    top_images[top_idx]["mconf"] = confidences
+                #---------------------------------------------------
+                # crop_image = cv2.resize(top_images[np.argmax(matching_score)]["crop_image"],(256,256))        
+                # que_image = cv2.resize(image0,(256,256))
+                # image = np.hstack((que_image, crop_image)) 
+                # for top_idx in range(len(top_images)):
+                #     crop_image = top_images[top_idx]["crop_image"]
+                #     score = matching_score[top_idx]
+                #     crop_image = cv2.resize(crop_image,(256,256))
+                #     cv2.putText(crop_image,f'{score}',(100,100),cv2.FONT_HERSHEY_COMPLEX,1,(0,0,255),1)
+                #     image = np.hstack((image, crop_image)) 
+                # cv2.imwrite(f"segment_anything/crop_images/{idx}.jpg", image)
+                #---------------------------------------------------
+                t4 = time.time()
+                # print(f"t4-t3: object detection:{1000*(t4-t3)} ms")
+                pose0_name = image0_name.replace("color", "poses_ba").replace("png","txt")
+                pose1_name = image1_name.replace("color", "poses_ba").replace("png","txt")
+                pose0 = np.loadtxt(pose0_name)
+                pose1 = np.loadtxt(pose1_name)
+                # pose0 = np.vstack((pose0, np.array([[0,0,0,1]])))
+                # pose1 = np.vstack((pose1, np.array([[0,0,0,1]])))
+                relative_pose =  np.matmul(pose1, inv(pose0))
+                t = relative_pose[:3,-1].reshape(1,3)
+                if "crop_image" not in top_images[top_idx]:
+                    continue
+                max_match_idx = np.argmax(matching_score)
+                pre_bbox  = top_images[max_match_idx]["bbox"]
+                mkpts0 = top_images[max_match_idx]["mkpts0"]
+                mkpts1 = top_images[max_match_idx]["mkpts1"]
+                pre_K = top_images[max_match_idx]["K"]
+
+                _3d_bbox = np.loadtxt(f"{os.path.join(ROOT_DIR, label)}/box3d_corners.txt")
+                bbox_pts_3d, _ = project_points(_3d_bbox, pose1[:3,:4], K1)
+                bbox_pts_3d = bbox_pts_3d.astype(np.int32)
+                x0, y0, w, h = cv2.boundingRect(bbox_pts_3d)
+                x1,y1 = x0+w, y0+h
+                gt_bbox = np.array([x0, y0, x1, y1])
+                is_recalled = recall_object(pre_bbox , gt_bbox)
+                recall_image = recall_image + int(is_recalled>0.5)
+                ret = estimate_pose(mkpts0, mkpts1 , K0 , pre_K , 0.5, 0.99)  
+                if ret is  not None:
+                    Rot, t, inliers = ret 
+                    t_err, R_err = relative_pose_error(relative_pose, Rot, t, ignore_gt_t_thr=0.0)
+                    metrics['R_errs'].append(R_err)
+                    metrics['t_errs'].append(t_err)
+                else:
+                    metrics['R_errs'].append(90)
+                    metrics['t_errs'].append(90)
+                metrics["identifiers"].append( pair_name )
+
+            
+        print(f"Acc: {recall_image}/{all_image}")
+        import pprint
+        from src.utils.metrics import (
+            aggregate_metrics
+        )
+        from loguru import logger
+        val_metrics_4tb = aggregate_metrics(metrics, 5e-4)
+        val_metrics_4tb["AP50"] = recall_image/all_image
+        logger.info('\n' + pprint.pformat(val_metrics_4tb))
+
+        res_table.append( [f"{name }"] +  list(val_metrics_4tb.values())  )
+
+    from tabulate import tabulate
+    headers = ["Category"] + list(val_metrics_4tb.keys())
+    all_data = np.array(res_table)[:,1:].astype(np.float32)
+    res_table.append( ["Avg"] + all_data.mean(0).tolist() )
+    print(tabulate(res_table, \
+        headers=headers, tablefmt='fancy_grid'))
+
