@@ -100,11 +100,11 @@ The directory should be organized in the following structure:
 
 ### Demos
 <div>
-<font color="red">
+<span style="color:red">
 Thank you for your attention, and I apologize for the excessive use of hard-coded values in the code. We have now organized the code structure and README to make it more user-friendly.  
 
 The code has been recently tidied up for release and could perhaps contain tiny bugs. Please feel free to open an issue.
-</font><br/> 
+</span>
 </div>
 
 ```bash
