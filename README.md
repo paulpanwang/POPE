@@ -78,7 +78,7 @@ wget  https://dl.fbaipublicfiles.com/dinov2/dinov2_vits14/dinov2_vits14_pretrain
 
 ### Prepare datasets (Updated dataset [download links](https://huggingface.co/datasets/paulpanwang/POPE_Dataset))
 
-1. Download  datasets from the Hugging Face Website: download OnePose/OnePose_LowTexture datasets from [here](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/tree/main) YCB-Video and LINEMOD dataset from [here](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/tree/main), and extract them into `./data`. 
+Download  datasets from the Hugging Face Website: download OnePose/OnePose_LowTexture datasets from [here](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/tree/main) YCB-Video and LINEMOD dataset from [here](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/tree/main), and extract them into `./data`. 
 
 
 ~~If you want to evaluate on LINEMOD dataset, download the real training data, test data and 3D object models from [CDPN](https://github.com/LZGMatrix/CDPN_ICCV2019_ZhigangLi), and detection results by YOLOv5 from [here](https://zjueducn-my.sharepoint.com/:u:/g/personal/12121064_zju_edu_cn/EdodUdKGwHpCuvw3Cio5DYoBTntYLQuc7vNg9DkytWuJAQ?e=sAXp4B). Then extract them into `./data`~~
