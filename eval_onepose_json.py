@@ -14,26 +14,7 @@ if __name__ == "__main__":
     metrics = dict()
     metrics.update({'R_errs': [], 't_errs': [], 'inliers': [] , "identifiers":[] })
 
-
-    id2name_dict = {
-        1: "ape",
-        2: "benchvise",
-        4: "camera",
-        5: "can",
-        6: "cat",
-        8: "driller",
-        9: "duck",
-        10: "eggbox",
-        11: "glue",
-        12: "holepuncher",
-        13: "iron",
-        14: "lamp",
-        15: "phone",
-    }
-
-
-
-    # load model 
+    # load dataset from 'data/openpose' or /data/onepose_plusplus
     ROOT_DIR = "data/onepose/"
     res_table = []
 
