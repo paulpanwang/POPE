@@ -77,8 +77,12 @@ wget  https://dl.fbaipublicfiles.com/dinov2/dinov2_vits14/dinov2_vits14_pretrain
 
 
 ### Prepare datasets (Updated dataset download links.)
+
 1. Download  datasets from the official website: download OnePose dataset from [here](https://zjueducn-my.sharepoint.com/:f:/g/personal/zihaowang_zju_edu_cn/ElfzHE0sTXxNndx6uDLWlbYB-2zWuLfjNr56WxF11_DwSg?e=GKI0Df), YCBV dataset from [here](https://drive.google.com/file/d/1JpixHE9DN-W-BVFkVC12qss0CUu9VA8y/edit) and OnePose_LowTexture dataset from [here](https://zjueducn-my.sharepoint.com/:f:/g/personal/12121064_zju_edu_cn/ElfJC7FiK75Hhh1CF0sPVSQBdzJpeWpOfj8TZzRuxo9PUg?e=0mSTUS), and extract them into `./data`. 
-If you want to evaluate on LINEMOD dataset, download the real training data, test data and 3D object models from [CDPN](https://github.com/LZGMatrix/CDPN_ICCV2019_ZhigangLi), and detection results by YOLOv5 from [here](https://zjueducn-my.sharepoint.com/:u:/g/personal/12121064_zju_edu_cn/EdodUdKGwHpCuvw3Cio5DYoBTntYLQuc7vNg9DkytWuJAQ?e=sAXp4B). Then extract them into `./data`
+
+
+
+~~If you want to evaluate on LINEMOD dataset, download the real training data, test data and 3D object models from [CDPN](https://github.com/LZGMatrix/CDPN_ICCV2019_ZhigangLi), and detection results by YOLOv5 from [here](https://zjueducn-my.sharepoint.com/:u:/g/personal/12121064_zju_edu_cn/EdodUdKGwHpCuvw3Cio5DYoBTntYLQuc7vNg9DkytWuJAQ?e=sAXp4B). Then extract them into `./data` ~~
 
 The directory should be organized in the following structure:
 ```
