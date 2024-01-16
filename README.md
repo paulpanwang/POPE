@@ -80,10 +80,11 @@ wget  https://dl.fbaipublicfiles.com/dinov2/dinov2_vits14/dinov2_vits14_pretrain
 
 Download  datasets from the Hugging Face Website: download OnePose/OnePose_LowTexture datasets from [here](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/tree/main) YCB-Video and LINEMOD dataset from [here](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/tree/main), and extract them into `./data`. 
 
-* [ycbv](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/ycbv.zip): https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/ycbv.zip
-* [onepose](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/onepose.zip): https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/onepose.zip
-* [onepose_plusplus](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/onepose_plusplus.zip): https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/onepose_plusplus.zip
-* [LM_dataset](https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/LM_dataset.zip): https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/LM_dataset.zip
+* LM_dataset: https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/LM_dataset.zip
+* onepose: https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/onepose.zip
+* onepose_plusplus: https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/onepose_plusplus.zip
+* ycbv: https://huggingface.co/datasets/paulpanwang/POPE_Dataset/resolve/main/ycbv.zip
+
 
 
 ~~If you want to evaluate on LINEMOD dataset, download the real training data, test data and 3D object models from [CDPN](https://github.com/LZGMatrix/CDPN_ICCV2019_ZhigangLi), and detection results by YOLOv5 from [here](https://zjueducn-my.sharepoint.com/:u:/g/personal/12121064_zju_edu_cn/EdodUdKGwHpCuvw3Cio5DYoBTntYLQuc7vNg9DkytWuJAQ?e=sAXp4B). Then extract them into `./data`~~
