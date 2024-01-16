@@ -1,10 +1,11 @@
+h5py
+kornia
 torch
 torchvision
 omegaconf
 torchmetrics==0.10.3
 fvcore
 iopath
-xformers
 submitit
 pathlib
 transforms3d
