@@ -32,6 +32,12 @@
 ## Preparation
 
 ### Installation
+
+#### Docker setup
+Please check [docker/README.MD](docker/README.md)
+
+OR you can follow the steps below:
+
 The code is tested with python 3.9, cuda == 11.3, pytorch == 1.10.1. Additionally dependencies include: 
 
 ```bash
