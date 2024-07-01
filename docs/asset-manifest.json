@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/POPE/static/css/main.aa1ba7f2.css",
-    "main.js": "/POPE/static/js/main.b06db96e.js",
+    "main.js": "/POPE/static/js/main.fe208755.js",
     "static/js/787.4abed053.chunk.js": "/POPE/static/js/787.4abed053.chunk.js",
     "static/media/MOUSE_G2_adjusted_compressed.mp4": "/POPE/static/media/MOUSE_G2_adjusted_compressed.7e6dc6f7b89b982e45eb.mp4",
     "static/media/FAN_RES_2_adjusted_compressed.mp4": "/POPE/static/media/FAN_RES_2_adjusted_compressed.adb2646e92c90c07d803.mp4",
@@ -47,11 +47,11 @@
     "static/media/outline-icons.woff2": "/POPE/static/media/outline-icons.687a4990ea22bb1a49d4.woff2",
     "index.html": "/POPE/index.html",
     "main.aa1ba7f2.css.map": "/POPE/static/css/main.aa1ba7f2.css.map",
-    "main.b06db96e.js.map": "/POPE/static/js/main.b06db96e.js.map",
+    "main.fe208755.js.map": "/POPE/static/js/main.fe208755.js.map",
     "787.4abed053.chunk.js.map": "/POPE/static/js/787.4abed053.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.aa1ba7f2.css",
-    "static/js/main.b06db96e.js"
+    "static/js/main.fe208755.js"
   ]
 }
